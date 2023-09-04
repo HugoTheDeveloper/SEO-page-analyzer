@@ -17,8 +17,8 @@ flake8 = "^6.1.0"
 pytest = "^7.4.1"
 pytest-cov = "^4.1.0"
 
-[scripts]
-
+[tool.poetry.scripts]
+analyzer = 'page_analyzer.app:app'
 
 [build-system]
 requires = ["poetry-core"]
