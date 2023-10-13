@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from .database_manager import DbManager
 from urllib.parse import urlparse
+import requests
 
 
 load_dotenv()
@@ -63,6 +64,13 @@ def check_url(id):
     if not db.is_url_id_in_bd(id):
         flash('Запрашиваемая страница не найдена', 'warning')
         return redirect(url_for('start_page')), 404
-    db.insert_url_check(id)
+    url = db.get_url_from_urls_list(id).name
+    try:
+        response = requests.get(url)
+    except requests.exceptions.RequestException:
+        flash('Произошла ошибка при проверке', 'danger')
+        return redirect(url_for('get_urls_checks_list', id=id)), 400
+
+    db.insert_url_check(id, response.status_code)
     flash('Страница успешно проверена!', 'success')
     return redirect(url_for('get_urls_checks_list', id=id))

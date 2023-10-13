@@ -32,12 +32,12 @@ class DbManager:
                 url = cursor.fetchone()
                 return url
 
-    def insert_url_check(self, url_id):
+    def insert_url_check(self, url_id, response):
         with init_connection() as conn:
             with get_cursor(conn) as cursor:
                 date = datetime.date.today()
-                cursor.execute("INSERT INTO urls_checks (url_id, created_at) VALUES (%s, %s)",
-                               (url_id, date))
+                cursor.execute("INSERT INTO urls_checks (url_id, created_at, response_code) VALUES (%s, %s, %s)",
+                               (url_id, date, response))
 
     def get_urls_list(self):
         with init_connection() as conn:
