@@ -30,7 +30,7 @@ def urls_list():
         normalized_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
         if not validate_url(normalized_url):
             flash('Указанный url не корректный!', 'danger')
-            return redirect(url_for('start_page')), 424
+            return redirect(url_for('start_page'))
         if db.is_url_in_bd(normalized_url):
             flash('Страница указанного url уже существует', 'warning')
             url_id = db.get_id_from_url(normalized_url)
@@ -58,4 +58,11 @@ def get_urls_checks_list(id):
                            url=url_info, checks_list=checks_list)
 
 
-
+@app.route('/urls/<int:id>/check', methods=['POST'])
+def check_url(id):
+    if not db.is_url_id_in_bd(id):
+        flash('Запрашиваемая страница не найдена', 'warning')
+        return redirect(url_for('start_page')), 404
+    db.insert_url_check(id)
+    flash('Страница успешно проверена!', 'success')
+    return redirect(url_for('get_urls_checks_list', id=id))

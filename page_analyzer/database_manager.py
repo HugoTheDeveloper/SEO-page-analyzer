@@ -32,6 +32,13 @@ class DbManager:
                 url = cursor.fetchone()
                 return url
 
+    def insert_url_check(self, url_id):
+        with init_connection() as conn:
+            with get_cursor(conn) as cursor:
+                date = datetime.date.today()
+                cursor.execute("INSERT INTO urls_checks (url_id, created_at) VALUES (%s, %s)",
+                               (url_id, date))
+
     def get_urls_list(self):
         with init_connection() as conn:
             with get_cursor(conn) as cursor:
@@ -70,7 +77,7 @@ class DbManager:
         with init_connection() as conn:
             with get_cursor(conn) as cursor:
                 cursor.execute("SELECT * FROM urls_checks "
-                               "WHERE id=%s ORDER BY created_at DESC, id DESC",
+                               "WHERE url_id=%s ORDER BY created_at DESC, id DESC",
                                (url_id,))
                 checks_list = cursor.fetchall()
                 return checks_list
