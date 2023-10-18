@@ -45,9 +45,9 @@
     <tr>
       <td>{{ check.id }}</td>
       <td>{{ check.response_code }}</td>
-      <td>{{ check.h1 }}</td>
-      <td>{{ check.title }}</td>
-      <td>{{ check.description }}</td>
+      <td>{{ check.h1 if check.h1 else ' ' }}</td>
+      <td>{{ check.title if check.title else ' '}}</td>
+      <td>{{ check.description  if check.description else ' '}}</td>
       <td>{{ check.created_at }}</td>
     </tr>
     {% endfor %}

@@ -17,8 +17,8 @@
         <tr>
           <td>{{ url.id }}</td>
           <td><a href="{{ url_for('get_urls_checks_list', id=url.id) }}">{{ url.name }}</a></td>
-          <td>{{ url.checked_at }}</td>
-          <td>{{ url.response }}</td>
+          <td>{{ url.created_at if url.created_at else ' ' }}</td>
+          <td>{{ url.response_code if url.response_code else ' ' }}</td>
         </tr>
         {% endfor %}
       </tbody>
