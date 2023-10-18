@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
+from flask import (Flask, render_template, request, redirect,
+                   url_for, flash, get_flashed_messages)
 from validators import url as validate_url
 from dotenv import load_dotenv
 import os
@@ -31,10 +32,10 @@ def urls_list():
         parsed_url = urlparse(url_to_check)
         normalized_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
         if not validate_url(normalized_url):
-            flash('Указанный url не корректный!', 'danger')
+            flash('Некорректный URL', 'danger')
             return redirect(url_for('start_page'), 400)
         if db.is_url_in_bd(normalized_url):
-            flash('Страница указанного url уже существует', 'warning')
+            flash('Страница уже существует', 'warning')
             url_id = db.get_id_from_url(normalized_url)
             return redirect(url_for('get_urls_checks_list', id=url_id))
         url = db.insert_url(normalized_url)
@@ -81,5 +82,5 @@ def check_url(id):
                         h1=h1,
                         title=title,
                         content=content)
-    flash('Страница успешно проверена!', 'success')
+    flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_urls_checks_list', id=id))
