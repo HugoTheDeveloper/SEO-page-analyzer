@@ -3,7 +3,7 @@
 ![Continuous integration](https://github.com/HugoTheDeveloper/python-project-83/actions/workflows/continious-integration.yml/badge.svg)
 
 ### Showcase
-![]()
+![](https://github.com/HugoTheDeveloper/python-project-83/blob/main/showcase.gif)
 ### About project:
 This app helps analyze SEO usability of website. It's able to find main headline, title and description.
 
