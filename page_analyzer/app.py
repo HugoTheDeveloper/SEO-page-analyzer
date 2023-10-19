@@ -33,7 +33,7 @@ def urls_list():
         normalized_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
         if not validate_url(normalized_url):
             flash('Некорректный URL', 'danger')
-            return redirect(url_for('start_page'), 400)
+            return redirect(url_for('start_page'), 422)
         if db.is_url_in_bd(normalized_url):
             flash('Страница уже существует', 'warning')
             url_id = db.get_id_from_url(normalized_url)
