@@ -33,7 +33,9 @@ def urls_list():
         normalized_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
         if not validate_url(normalized_url):
             flash('Некорректный URL', 'danger')
-            return redirect(url_for('start_page'), 422)
+            messages = get_flashed_messages(with_categories=True)
+            return render_template('start_page.html', messages=messages), 422
+            # return redirect(url_for('start_page'), 422)
         if db.is_url_in_bd(normalized_url):
             flash('Страница уже существует', 'warning')
             url_id = db.get_id_from_url(normalized_url)
@@ -68,6 +70,8 @@ def check_url(id):
     url = db.get_url_from_urls_list(id).name
     try:
         response = requests.get(url)
+        if response.status_code != requests.codes.ok:
+            raise requests.exceptions.RequestException
         responses_html = response.content
         soup = HTMLParser(responses_html)
         h1 = soup.get_h1()
