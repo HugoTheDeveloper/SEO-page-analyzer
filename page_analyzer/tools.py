@@ -25,3 +25,10 @@ class HTMLParser:
                     return f'{content[:247]}...'
                 return content
         return
+
+    def check(self):
+        result = dict()
+        result['title'] = self.get_title()
+        result['h1'] = self.get_h1()
+        result['content'] = self.get_content()
+        return result

@@ -3,10 +3,10 @@ from flask import (Flask, render_template, request, redirect,
 from validators import url as validate_url
 from dotenv import load_dotenv
 import os
-from .database_manager import DbManager
 from urllib.parse import urlparse
 import requests
 from .tools import HTMLParser
+from .database_manager import DbManager
 
 
 load_dotenv()
@@ -72,22 +72,15 @@ def check_url(id):
     try:
         response = requests.get(url)
         response.raise_for_status()
-        # if response.status_code != requests.codes.ok:
-        #     raise requests.exceptions.RequestException
     except requests.exceptions.RequestException:
         flash('Произошла ошибка при проверке', 'danger')
         return redirect(url_for('get_urls_checks_list', id=id, code=400))
 
     responses_html = response.content
     soup = HTMLParser(responses_html)
-    h1 = soup.get_h1()
-    title = soup.get_title()
-    content = soup.get_content()
+    check = soup.check()
+    full_check = check | {'url_id': id, 'response': response.status_code}
 
-    db.insert_url_check(url_id=id,
-                        response=response.status_code,
-                        h1=h1,
-                        title=title,
-                        content=content)
+    db.insert_url_check(full_check)
     flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_urls_checks_list', id=id))
