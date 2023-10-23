@@ -50,15 +50,6 @@ class DbManager:
                     return True
                 return False
 
-    def is_url_id_in_bd(self, url_id):
-        with init_connection() as conn:
-            with get_cursor(conn) as cursor:
-                cursor.execute('SELECT * FROM urls WHERE id=%s', (url_id,))
-                desired_url = cursor.fetchone()
-                if desired_url:
-                    return True
-                return False
-
     def get_url_from_urls_list(self, url_id):
         with init_connection() as conn:
             with get_cursor(conn) as cursor:
