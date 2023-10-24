@@ -346,18 +346,6 @@ files = [
 ]
 
 [[package]]
-name = "pip"
-version = "23.3"
-description = "The PyPA recommended tool for installing Python packages."
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "pip-23.3-py3-none-any.whl", hash = "sha256:bc38bb52bc286514f8f7cb3a1ba5ed100b76aaef29b521d48574329331c5ae7b"},
-    {file = "pip-23.3.tar.gz", hash = "sha256:bb7d4f69f488432e4e96394612f43ab43dd478d073ef7422604a570f7157561e"},
-]
-
-[[package]]
 name = "psycopg2-binary"
 version = "2.9.9"
 description = "psycopg2 - Python-PostgreSQL Database Adapter"
@@ -588,4 +576,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10"
-content-hash = "92bcc2cd390112811025c7f3e4e71a1bb8133336479cdef8e6c1024b6f807b89"
+content-hash = "3620727486dc006cd7df1c4a32bb5fe5d6b5d59fe8aa20671f63293131753d7b"

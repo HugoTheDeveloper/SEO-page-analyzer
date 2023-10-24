@@ -1,8 +1,10 @@
 install:
 	poetry install
 
-build:
-	./build.sh
+init_postgres:
+	psql -a -d $DATABASE_URL -f database.sql
+
+build: install init_postgres
 
 publish:
 	poetry publish --dry-run
