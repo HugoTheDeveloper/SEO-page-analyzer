@@ -83,29 +83,11 @@ class DbManager:
 
     @execute_in_bd
     def get_urls_list(self, cursor=None):
-        cursor.execute("SELECT DISTINCT url_id, max(id) AS "
-                       "id FROM urls_checks GROUP BY url_id")
-        checks = cursor.fetchall()
-        # print(checks)
-        # cursor.execute('SELECT DISTINCT ON (url_id, max(id)) url_id, id, response_code, created_at'
-        #                ' FROM urls_checks GROUP BY url_id, id, response_code')
-        # print(cursor.fetchall())
-        # cursor.execute('SELECT DISTINCT ON (url_id) url_id, max(id) AS id FROM urls_checks GROUP BY url_id '
-        #                'RIGHT JOIN urls ON urls.id = urls_checks.url_id ORDER BY id DESC')
-        # print(cursor.fetchall())
-        last_checks = tuple((check.id for check in checks))
-        if not last_checks:
-            cursor.execute("SELECT name, id FROM urls;")
-            return cursor.fetchall()
-        cursor.execute("CREATE TEMP TABLE last_checks "
-                       "AS SELECT url_id, id, response_code, "
-                       "created_at FROM urls_checks WHERE id in %s;",
-                       (last_checks,))
-        cursor.execute("SELECT urls.id AS id, urls.name AS name, "
-                       "last_checks.response_code AS response_code, "
-                       "last_checks.created_at AS created_at "
-                       "FROM urls LEFT JOIN last_checks ON "
-                       "urls.id = last_checks.url_id "
-                       "ORDER BY id DESC")
+        cursor.execute("SELECT DISTINCT ON (urls.id) urls.id AS id, "
+                       "urls_checks.id AS check_id, urls_checks.response_code "
+                       "AS response_code, urls_checks.created_at AS created_at,"
+                       " urls.name AS name FROM urls_checks RIGHT JOIN urls"
+                       " ON urls.id = urls_checks.url_id "
+                       "ORDER BY urls.id DESC,check_id DESC")
         desired_urls = cursor.fetchall()
         return desired_urls

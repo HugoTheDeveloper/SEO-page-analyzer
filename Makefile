@@ -2,7 +2,7 @@ install:
 	poetry install
 
 init_postgres:
-	psql -a -d $DATABASE_URL -f database.sql
+	psql -a -d $(DATABASE_URL) -f database.sql
 
 build: install init_postgres
 
