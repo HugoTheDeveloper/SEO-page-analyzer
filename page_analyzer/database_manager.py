@@ -50,14 +50,6 @@ class DbManager:
                         check["h1"], check['title'], check['content']))
 
     @execute_in_bd
-    def is_url_in_bd(self, url, cursor=None):
-        cursor.execute("SELECT * FROM urls WHERE name=%s", (url,))
-        desired_url = cursor.fetchone()
-        if desired_url:
-            return True
-        return False
-
-    @execute_in_bd
     def get_url_from_urls_list(self, url_id, cursor=None):
         cursor.execute("SELECT * FROM urls WHERE id=%s", (url_id,))
         desired_url = cursor.fetchone()
@@ -78,7 +70,7 @@ class DbManager:
         cursor.execute("SELECT * FROM  urls WHERE name=%s", (url,))
         url_id = cursor.fetchone()
         if not url_id:
-            raise ValueError('Database doesnt contain this url!')
+            return None
         return url_id.id
 
     @execute_in_bd

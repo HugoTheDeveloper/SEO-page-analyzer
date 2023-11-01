@@ -34,9 +34,9 @@ def post_url():
         flash('Некорректный URL', 'danger')
         messages = get_flashed_messages(with_categories=True)
         return render_template('start_page.html', messages=messages), 422
-    if db.is_url_in_bd(normalized_url):
+    url_id = db.get_id_from_url(normalized_url)
+    if url_id:
         flash('Страница уже существует', 'warning')
-        url_id = db.get_id_from_url(normalized_url)
         return redirect(url_for('get_urls_checks_list', id=url_id))
     url = db.insert_url(normalized_url)
     flash('Страница успешно добавлена', 'success')

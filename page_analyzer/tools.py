@@ -21,9 +21,7 @@ class HTMLParser:
         for meta in self.soup.find_all('meta'):
             if meta.get('name') == 'description':
                 content = meta.get('content')
-                if len(content) > 255:
-                    return f'{content[:247]}...'
-                return content
+                return content[:255]
         return
 
     def check(self):
