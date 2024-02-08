@@ -31,7 +31,5 @@ SECRET_KEY may be generated or manually entered.
 > 
 >DATABASE_URL=postgresql://janedoe:mypassword@localhost:5432/mydb
 
-### [Check out in action](https://page-analyzer-wf2q.onrender.com)
-
 
 
